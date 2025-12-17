@@ -1,59 +1,92 @@
-# PELUQUERIA
+💈 ERYCK_STYLE — Sitio Web para Peluquería
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.3.
+Este repositorio contiene ERYCK_STYLE, un sitio web profesional desarrollado para representar la imagen y los servicios de una peluquería. El proyecto está completamente finalizado y listo para ser entregado, instalado o desplegado en el hosting del cliente.
 
-## Development server
 
-To start a local development server, run:
 
-```bash
-ng serve
+🧾 Descripción del proyecto
+
+El sitio web está diseñado para ofrecer una experiencia clara y moderna, mostrando la información esencial del negocio.
+Incluye:
+
+Página principal con presentación del local
+
+Sección de servicios disponibles
+
+Galería o apartado visual
+
+Información general: horarios, ubicación y contacto
+
+Diseño responsive adaptado a móviles, tablets y ordenadores
+
+El objetivo del proyecto es proporcionar una página profesional, rápida y visualmente atractiva adecuada para un establecimiento de peluquería.
+
+🛠 Tecnologías utilizadas
+
+El desarrollo del sitio se ha realizado con:
+
+React
+
+TypeScript
+
+Vite
+
+Tailwind CSS
+
+shadcn/ui (componentes de interfaz)
+
+Estas tecnologías garantizan un rendimiento óptimo, facilidad de mantenimiento y una interfaz moderna.
+
+
+
+🚀 Ejecución en local
+
+Para revisar, modificar o mantener el proyecto:
+
+```sh
+# Clonar el repositorio
+git clone <URL_DEL_REPO>
+
+# Acceder al directorio
+cd ERYCK_STYLE
+
+# Instalar dependencias
+npm install
+
+# Ejecutar en modo desarrollo
+npm run dev
 ```
+Esto abrirá la web en el navegador con recarga automática al editar.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+🏭 Build de producción
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+Para generar la versión final que se subirá al hosting del cliente:
+```sh
+npm run build
 ```
+Se generará la carpeta dist/ con todos los archivos optimizados.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-```bash
-ng generate --help
-```
 
-## Building
+🌐 Despliegue
 
-To build the project run:
+Los archivos de la carpeta dist pueden instalarse en:
 
-```bash
-ng build
-```
+Servidores como Vercel o Netlify
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+cPanel u otros hostings tradicionales
 
-## Running unit tests
+Servidores privados (VPS)
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Cualquier plataforma compatible con sitios estáticos
 
-```bash
-ng test
-```
+El sitio no requiere backend para su funcionamiento.
 
-## Running end-to-end tests
 
-For end-to-end (e2e) testing, run:
 
-```bash
-ng e2e
-```
+📌 Estado del proyecto
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+El proyecto ERYCK_STYLE está finalizado, estable y listo para ser entregado o desplegado.
+Puede ampliarse en cualquier momento con nuevas secciones, páginas o funcionalidades según las necesidades del cliente.
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

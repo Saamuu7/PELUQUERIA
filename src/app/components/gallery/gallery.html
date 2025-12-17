@@ -1,0 +1,98 @@
+<section class="py-20 bg-background relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none">
+    </div>
+
+    <div class="container px-4 mx-auto relative z-10">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <h2 class="text-4xl md:text-5xl font-bold text-foreground mb-4">
+                <span class="font-script text-6xl text-primary font-normal">Galería</span> de Trabajos
+            </h2>
+            <p class="text-lg text-muted-foreground">
+                Algunas de nuestras transformaciones y el ambiente del salón.
+            </p>
+        </div>
+
+        <!-- Carousel Wrapper -->
+        <div class="relative max-w-7xl mx-auto">
+            <div class="overflow-hidden" emblaCarousel [options]="options">
+                <div class="flex -ml-4">
+                    <div *ngFor="let src of images; index as i"
+                        class="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] pl-4 min-w-0">
+                        <figure
+                            class="relative rounded-2xl overflow-hidden aspect-[4/5] group shadow-lg border border-white/5 bg-card">
+                            <button (click)="openLightbox(i)" class="w-full h-full block focus:outline-none"
+                                [attr.aria-label]="'Abrir imagen ' + (i + 1)">
+                                <img [src]="src" [alt]="'Trabajo ' + (i + 1)"
+                                    class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+                                <div
+                                    class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    <span
+                                        class="text-white font-medium tracking-widest uppercase text-sm border border-white/30 px-4 py-2 rounded-full backdrop-blur-sm">Ver
+                                        Foto</span>
+                                </div>
+                            </button>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <button app-button variant="outline" size="icon"
+                class="absolute -left-4 top-1/2 -translate-y-1/2 rounded-full bg-background/80 backdrop-blur-sm border-white/10 shadow-lg hover:bg-primary hover:text-white hidden md:flex items-center justify-center p-0"
+                (click)="scrollPrev()">
+                <!-- Chevron Left -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m15 18-6-6 6-6" />
+                </svg>
+            </button>
+            <button app-button variant="outline" size="icon"
+                class="absolute -right-4 top-1/2 -translate-y-1/2 rounded-full bg-background/80 backdrop-blur-sm border-white/10 shadow-lg hover:bg-primary hover:text-white hidden md:flex items-center justify-center p-0"
+                (click)="scrollNext()">
+                <!-- Chevron Right -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m9 18 6-6-6-6" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Lightbox modal -->
+        <div *ngIf="openIndex() !== null"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm animate-fade-in">
+            <div class="relative w-full h-full flex items-center justify-center p-4">
+                <button (click)="closeLightbox()" class="absolute right-4 top-4 z-50 text-white/70 hover:text-white p-2"
+                    aria-label="Cerrar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                    </svg>
+                </button>
+
+                <div class="relative max-w-5xl w-full max-h-[85vh] aspect-auto">
+                    <img [src]="images[openIndex()!]" [alt]="'Trabajo ' + (openIndex()! + 1)"
+                        class="w-full h-full object-contain shadow-2xl rounded-lg" />
+                </div>
+
+                <button (click)="showPrev()"
+                    class="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white p-2 transition-transform hover:scale-110"
+                    aria-label="Anterior">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m15 18-6-6 6-6" />
+                    </svg>
+                </button>
+
+                <button (click)="showNext()"
+                    class="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white p-2 transition-transform hover:scale-110"
+                    aria-label="Siguiente">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m9 18 6-6-6-6" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>

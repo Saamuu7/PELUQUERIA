@@ -1,0 +1,47 @@
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <!-- Background Image -->
+    <div class="absolute inset-0 z-0">
+        <img src="assets/hero-salon.jpg" alt="ERYCK_STYLE Salon" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-background"></div>
+    </div>
+
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 z-0 opacity-30">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
+        <div
+            class="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-pulse delay-1000">
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="container mx-auto px-4 z-10 text-center relative">
+        <div class="max-w-4xl mx-auto space-y-8">
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 animate-slide-up">
+                Tu estilo, <span class="font-script text-6xl md:text-8xl text-primary font-normal ml-2">Eryck
+                    Style</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto animate-fade-in animation-delay-200">
+                Salón profesional con atención experta. Descubre cómo realzar tu belleza con
+                especialistas en cuidado capilar.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in animation-delay-400">
+                <a app-button size="lg" variant="premium" routerLink="/reservar"
+                    class="text-lg px-8 py-6 shadow-glow hover-lift">
+                    Reservar Cita
+                </a>
+                <a app-button size="lg" variant="glass" href="#servicios" (click)="scrollToServices($event)"
+                    class="text-lg px-8 py-6 hover-lift">
+                    Ver Servicios
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <svg class="w-6 h-6 text-white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+    </div>
+</section>

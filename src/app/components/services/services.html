@@ -1,0 +1,46 @@
+<section id="servicios" class="py-20 bg-background relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-transparent pointer-events-none">
+    </div>
+    <div class="container mx-auto px-4">
+        <!-- Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-foreground mb-4 flex items-center justify-center gap-3">
+                Nuestros <span class="font-script text-6xl text-primary font-normal">Servicios</span>
+            </h2>
+            <p class="text-lg text-muted-foreground">
+                Ofrecemos una amplia gama de servicios profesionales para realzar tu belleza y estilo
+            </p>
+        </div>
+
+        <!-- Services Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div *ngFor="let service of services" app-card
+                class="group transition-all duration-500 hover:shadow-glow hover:-translate-y-2 border border-white/10 bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden">
+                <div app-card-content>
+                    <div class="flex items-start gap-4 p-5">
+                        <div class="flex-shrink-0">
+                            <div
+                                class="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white ring-1 ring-border">
+                                <!-- SVG Container -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" [innerHTML]="service.iconSvg"></svg>
+                            </div>
+                        </div>
+
+                        <div class="min-w-0 flex-1">
+                            <h3 class="text-lg font-semibold text-foreground truncate">{{ service.title }}</h3>
+                            <p class="text-sm text-muted-foreground mt-2">{{ service.description }}</p>
+
+                            <div class="mt-3 flex items-center justify-between text-xs text-muted-foreground">
+                                <span>Duración: <strong class="text-foreground">{{ service.duration || '—'
+                                        }}</strong></span>
+                                <span>Precio: <strong class="text-foreground">{{ service.price || '—' }}</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

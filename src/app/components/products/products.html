@@ -1,0 +1,56 @@
+<section id="productos" class="py-24 bg-background relative overflow-hidden">
+    <!-- Subtle background glow for texture -->
+    <div
+        class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/2">
+    </div>
+
+    <div class="container mx-auto px-4">
+        <!-- Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2
+                class="text-4xl md:text-5xl font-bold text-foreground mb-4 flex flex-col md:flex-row items-center justify-center gap-3">
+                <span class="font-script text-6xl text-primary font-normal">Colección</span> Profesional
+            </h2>
+            <p class="text-lg text-muted-foreground font-light tracking-wide max-w-xl mx-auto">
+                Selección exclusiva de productos premium. Disponibles únicamente para venta en salón.
+            </p>
+        </div>
+
+        <!-- Fashion Store Grid - 4 Columns for smaller items -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-10 gap-x-6">
+            <div *ngFor="let p of visibleProducts()" class="group cursor-default">
+                <!-- Image Container -->
+                <div class="relative aspect-[3/4] overflow-hidden rounded-sm bg-muted/20 mb-4">
+                    <img [src]="p.image" [alt]="p.name"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+
+                    <!-- Badge for 'In Store Only' -->
+                    <div
+                        class="absolute bottom-3 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span
+                            class="bg-black/70 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest rounded-full whitespace-nowrap">
+                            Solo en Tienda
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Product Info - Minimalist & Smaller -->
+                <div class="text-center space-y-1">
+                    <h3 class="text-base font-medium text-foreground font-serif leading-tight">
+                        {{ p.name }}
+                    </h3>
+                    <p class="text-xs text-muted-foreground/80">{{ p.size }}</p>
+                    <div class="text-base font-bold text-primary mt-1">{{ p.price }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View All / Info Link -->
+        <div class="mt-16 text-center">
+            <button app-button variant="outline" (click)="toggleShowAll()"
+                class="border-primary/50 text-foreground hover:bg-primary hover:text-white transition-all uppercase tracking-widest text-xs px-8 py-6 rounded-none cursor-pointer">
+                {{ showAll() ? "Mostrar Menos" : "Ver todos los productos" }}
+            </button>
+        </div>
+    </div>
+</section>

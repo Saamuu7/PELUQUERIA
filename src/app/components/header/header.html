@@ -1,0 +1,68 @@
+<header
+  class="fixed top-4 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-[95%] md:max-w-7xl z-50 transition-all duration-300 rounded-2xl"
+  [class.bg-black-70]="isScrolled()" [class.backdrop-blur-lg]="isScrolled()" [class.border]="isScrolled()"
+  [class.border-white-10]="isScrolled()" [class.shadow-lg]="isScrolled()" [class.py-2]="isScrolled()"
+  [class.bg-transparent]="!isScrolled()" [class.py-4]="!isScrolled()">
+  <div class="container mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between">
+      <!-- Logo Text -->
+      <a routerLink="/" class="flex items-center group relative">
+        <img src="assets/beso.png" alt="Marca"
+          class="absolute -top-4 -left-4 w-8 h-8 -rotate-12 opacity-90 drop-shadow-md pointer-events-none group-hover:scale-110 transition-transform duration-300" />
+        <span
+          class="font-script text-4xl md:text-5xl text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:text-primary pl-2">
+          Eryck Style
+        </span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav
+        class="hidden md:flex items-center gap-8 bg-black/20 px-8 py-3 rounded-full backdrop-blur-sm border border-white/5">
+        <a *ngFor="let link of navLinks" [routerLink]="link.href === '/' ? '/' : null"
+          (click)="scrollToSection(link.href)"
+          class="text-sm font-medium transition-all duration-300 relative hover:text-primary text-white/90 cursor-pointer">
+          {{ link.name }}
+        </a>
+        <a app-button variant="default" size="default" routerLink="/reservar"
+          class="shadow-glow ml-4 rounded-full px-6 bg-primary hover:bg-primary-hover text-primary-foreground font-medium">
+          Reservar Cita
+        </a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button class="md:hidden text-white hover:text-primary transition-colors p-2" (click)="toggleMenu()"
+        aria-label="Toggle menu">
+        <span *ngIf="!isMobileMenuOpen()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" x2="20" y1="12" y2="12" />
+            <line x1="4" x2="20" y1="6" y2="6" />
+            <line x1="4" x2="20" y1="18" y2="18" />
+          </svg>
+        </span>
+        <span *ngIf="isMobileMenuOpen()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        </span>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div *ngIf="isMobileMenuOpen()"
+      class="md:hidden mt-4 py-4 bg-black/90 rounded-xl border border-white/10 animate-fade-in backdrop-blur-md">
+      <div class="flex flex-col gap-4 px-4">
+        <a *ngFor="let link of navLinks" (click)="scrollToSection(link.href)"
+          class="text-white/90 hover:text-primary transition-colors font-medium text-lg text-center cursor-pointer">
+          {{ link.name }}
+        </a>
+        <a app-button routerLink="/reservar" (click)="toggleMenu()"
+          class="w-full rounded-xl bg-primary hover:bg-primary-hover text-black font-semibold text-center py-3">
+          Reservar Cita
+        </a>
+      </div>
+    </div>
+  </div>
+</header>

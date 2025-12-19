@@ -12,7 +12,9 @@ import { Card, CardContent } from '../ui/card/card';
 })
 export class Services {
   private sanitizer = inject(DomSanitizer);
-  readonly services = SERVICES;
+  // Split services strictly by category based on order in lib/services.ts
+  readonly barberServices = SERVICES.slice(0, 7);
+  readonly ladiesServices = SERVICES.slice(7);
 
   getSafeSvg(svgString: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(svgString);

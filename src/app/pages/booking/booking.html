@@ -1,0 +1,193 @@
+<div class="min-h-screen pt-36 pb-12 px-4 bg-background relative overflow-hidden flex items-center justify-center">
+    <!-- Background Decor -->
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute top-[10%] left-[5%] w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+        <div
+            class="absolute bottom-[10%] right-[5%] w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-pulse animation-delay-400">
+        </div>
+    </div>
+
+    <div
+        class="relative z-10 w-full max-w-4xl bg-card border border-border rounded-2xl shadow-2xl overflow-hidden flex flex-col min-h-[600px]">
+
+        <!-- Header / Progress -->
+        <div class="bg-black/20 p-6 border-b border-border flex justify-between items-center">
+            <h1 class="text-2xl font-serif text-foreground">Reservar Cita</h1>
+            <div class="flex gap-2">
+                <div class="h-2 w-8 rounded-full transition-colors" [class.bg-primary]="step >= 1"
+                    [class.bg-muted]="step < 1"></div>
+                <div class="h-2 w-8 rounded-full transition-colors" [class.bg-primary]="step >= 2"
+                    [class.bg-muted]="step < 2"></div>
+                <div class="h-2 w-8 rounded-full transition-colors" [class.bg-primary]="step >= 3"
+                    [class.bg-muted]="step < 3"></div>
+                <div class="h-2 w-8 rounded-full transition-colors" [class.bg-primary]="step >= 4"
+                    [class.bg-muted]="step < 4"></div>
+            </div>
+        </div>
+
+        <div class="flex-1 p-6 md:p-10 overflow-auto">
+
+            <!-- STEP 1: SELECT SERVICE -->
+            <div *ngIf="step === 1" class="animate-fade-in">
+                <h2 class="text-3xl font-bold mb-2 text-foreground">Elige un servicio</h2>
+                <p class="text-muted-foreground mb-8">Selecciona el tratamiento que deseas reservar.</p>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div *ngFor="let s of barberServices" (click)="selectService(s)"
+                        class="cursor-pointer group border border-border rounded-xl p-4 hover:border-primary hover:bg-primary/5 transition-all flex justify-between items-center">
+                        <div>
+                            <h3 class="font-bold text-foreground group-hover:text-primary transition-colors">{{ s.title
+                                }}</h3>
+                            <p class="text-xs text-muted-foreground mt-1">{{ s.duration }}</p>
+                        </div>
+                        <div class="text-lg font-serif font-bold text-red-500">{{ s.price }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 2: SELECT TIME -->
+            <div *ngIf="step === 2" class="animate-fade-in h-full flex flex-col">
+                <div class="flex items-center gap-4 mb-6">
+                    <button (click)="goBack()"
+                        class="p-2 rounded-full hover:bg-muted text-muted-foreground transition-colors">
+                        ← Volver
+                    </button>
+                    <div>
+                        <h2 class="text-2xl font-bold text-foreground">Selecciona fecha y hora</h2>
+                        <p class="text-sm text-primary font-medium">{{ selectedService?.title }} - {{
+                            selectedService?.duration }}</p>
+                    </div>
+                </div>
+
+                <!-- Calendar Controls -->
+                <div class="flex justify-between items-center mb-4 bg-muted/20 p-2 rounded-lg">
+                    <button (click)="changeWeek(-1)" class="px-4 py-2 hover:bg-muted rounded text-foreground">&larr;
+                        Anterior</button>
+                    <span class="font-medium text-foreground">{{ weekDays[0].display }} - {{ weekDays[5].display }}
+                        (Semana Actual)</span>
+                    <button (click)="changeWeek(1)" class="px-4 py-2 hover:bg-muted rounded text-foreground">Siguiente
+                        &rarr;</button>
+                </div>
+
+                <!-- Calendar Grid (Mobile friendly list or Grid?) Grid for consistency -->
+                <div class="flex-1 overflow-auto border border-border rounded-lg bg-card shadow-inner">
+                    <div class="grid grid-cols-[60px_repeat(6,1fr)] min-w-[600px]">
+                        <!-- Header -->
+                        <div class="p-2 border-b border-r border-border bg-muted/30"></div>
+                        <div *ngFor="let d of weekDays"
+                            class="p-2 border-b border-r border-border text-center text-sm font-medium bg-muted/30">
+                            {{ d.name.slice(0,3) }} <br><span class="text-xs opacity-70">{{ d.display }}</span>
+                        </div>
+
+                        <!-- Body -->
+                        <ng-container *ngFor="let time of timeSlots">
+                            <!-- Separator -->
+                            <div *ngIf="time === '16:00'"
+                                class="col-span-7 bg-muted/20 py-1 text-center text-[10px] uppercase font-bold tracking-widest text-muted-foreground border-y border-border">
+                                Tarde
+                            </div>
+
+                            <div class="contents">
+                                <!-- Time -->
+                                <div
+                                    class="p-2 border-r border-b border-border text-xs text-muted-foreground font-mono flex items-center justify-center">
+                                    {{ time }}</div>
+
+                                <!-- Slots -->
+                                <div *ngFor="let d of weekDays"
+                                    class="border-r border-b border-border p-1 relative h-12 transition-colors"
+                                    [class.bg-muted_40]="d.name === 'Sábado' && time >= '16:00'"
+                                    [class.bg-red-500_10]="!(d.name === 'Sábado' && time >= '16:00') && (isSlotTaken(d.date, time) || isPast(d.date, time))"
+                                    [class.hover:bg-primary_10]="!(d.name === 'Sábado' && time >= '16:00') && !isSlotTaken(d.date, time) && !isPast(d.date, time)">
+
+                                    <!-- Saturday Afternoon Closed -->
+                                    <div *ngIf="d.name === 'Sábado' && time >= '16:00'"
+                                        class="w-full h-full flex items-center justify-center">
+                                        <span
+                                            class="text-[10px] text-muted-foreground font-bold opacity-30">Cerrado</span>
+                                    </div>
+
+                                    <!-- Normal Logic -->
+                                    <ng-container *ngIf="!(d.name === 'Sábado' && time >= '16:00')">
+                                        <button *ngIf="!isSlotTaken(d.date, time) && !isPast(d.date, time)"
+                                            (click)="selectSlot(d.date, time)"
+                                            class="w-full h-full rounded text-[10px] font-bold text-primary hover:bg-primary hover:text-white transition-colors flex items-center justify-center">
+                                            Reservar
+                                        </button>
+
+                                        <div *ngIf="isSlotTaken(d.date, time)"
+                                            class="w-full h-full flex items-center justify-center">
+                                            <span class="text-[10px] text-red-400 font-bold opacity-50">Ocupado</span>
+                                        </div>
+                                        <div *ngIf="isPast(d.date, time) && !isSlotTaken(d.date, time)"
+                                            class="w-full h-full flex items-center justify-center">
+                                            <span
+                                                class="text-[10px] text-muted-foreground font-bold opacity-30">-</span>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 3: DETAILS -->
+            <div *ngIf="step === 3" class="animate-fade-in max-w-md mx-auto">
+                <button (click)="goBack()" class="mb-6 text-sm text-muted-foreground hover:text-foreground">← Cambiar
+                    fecha</button>
+
+                <h2 class="text-3xl font-bold mb-6 text-foreground">Tus Datos</h2>
+
+                <div class="bg-muted/10 p-4 rounded-xl mb-8 border border-border">
+                    <p class="text-sm text-muted-foreground">Resumen de la cita:</p>
+                    <div class="font-bold text-lg text-primary">{{ selectedService?.title }}</div>
+                    <div class="flex justify-between items-center mt-2 text-sm text-foreground">
+                        <span>{{ selectedDate }} a las {{ selectedTime }}</span>
+                        <span class="font-bold text-red-500">{{ selectedService?.price }}</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Nombre Completo</label>
+                        <input type="text" [(ngModel)]="clientName"
+                            class="w-full px-4 py-3 rounded-lg bg-black/20 border border-border focus:border-primary outline-none transition-colors"
+                            placeholder="Tu nombre">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Teléfono</label>
+                        <input type="tel" [(ngModel)]="clientPhone"
+                            class="w-full px-4 py-3 rounded-lg bg-black/20 border border-border focus:border-primary outline-none transition-colors"
+                            placeholder="600 000 000">
+                    </div>
+
+                    <button (click)="confirmBooking()" [disabled]="!clientName || !clientPhone"
+                        class="w-full py-4 mt-4 bg-gradient-to-r from-primary to-rose-600 text-white font-bold rounded-xl shadow-lg hover:shadow-primary/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                        CONFIRMAR RESERVA
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 4: SUCCESS -->
+            <div *ngIf="step === 4" class="text-center animate-scale-in py-10">
+                <div
+                    class="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-glow text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+                <h2 class="text-4xl font-bold text-white mb-4">¡Reserva Confirmada!</h2>
+                <p class="text-lg text-muted-foreground mb-8 max-w-md mx-auto">Te esperamos el <strong>{{ selectedDate
+                        }}</strong> a las <strong>{{ selectedTime }}</strong>.</p>
+
+                <a routerLink="/"
+                    class="px-8 py-3 bg-secondary hover:bg-secondary/80 text-foreground rounded-full font-medium transition-colors">
+                    Volver al Inicio
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
